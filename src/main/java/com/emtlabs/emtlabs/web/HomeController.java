@@ -1,4 +1,4 @@
-package com.emtlabs.emtlabs.web.view;
+package com.emtlabs.emtlabs.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

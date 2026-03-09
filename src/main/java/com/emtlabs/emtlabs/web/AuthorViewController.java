@@ -1,4 +1,4 @@
-package com.emtlabs.emtlabs.web.view;
+package com.emtlabs.emtlabs.web;
 
 import com.emtlabs.emtlabs.model.Author;
 import com.emtlabs.emtlabs.model.dto.AuthorDto;

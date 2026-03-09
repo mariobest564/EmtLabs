@@ -1,4 +1,4 @@
-package com.emtlabs.emtlabs.web.view;
+package com.emtlabs.emtlabs.web;
 
 import com.emtlabs.emtlabs.model.Book;
 import com.emtlabs.emtlabs.model.BookCategory;
