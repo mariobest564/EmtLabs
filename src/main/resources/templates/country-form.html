@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="layout :: layout(~{::body})">
+<head></head>
+<body>
+<div class="row">
+    <div class="col-md-8 col-lg-6">
+        <h2 th:text="${formTitle}">Country Form</h2>
+        <form th:action="${editing} ? @{/countries/{id}(id=${countryId})} : @{/countries}" th:object="${country}" method="post">
+            <div class="mb-3">
+                <label class="form-label">Name</label>
+                <input type="text" class="form-control" th:field="*{name}" placeholder="Country name">
+                <div class="text-danger small" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Continent</label>
+                <input type="text" class="form-control" th:field="*{continent}" placeholder="Continent">
+                <div class="text-danger small" th:if="${#fields.hasErrors('continent')}" th:errors="*{continent}"></div>
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+            <a class="btn btn-link" th:href="@{/countries}">Cancel</a>
+        </form>
+    </div>
+</div>
+</body>
+</html>

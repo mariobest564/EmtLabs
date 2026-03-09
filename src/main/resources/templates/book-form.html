@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="layout :: layout(~{::body})">
+<head></head>
+<body>
+<div class="row">
+    <div class="col-md-8 col-lg-6">
+        <h2 th:text="${formTitle}">Book Form</h2>
+        <form th:action="${editing} ? @{/books/{id}(id=${bookId})} : @{/books}" th:object="${book}" method="post">
+            <div class="mb-3">
+                <label class="form-label">Name</label>
+                <input type="text" class="form-control" th:field="*{name}" placeholder="Book name">
+                <div class="text-danger small" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Category</label>
+                <select class="form-select" th:field="*{category}">
+                    <option value="" disabled selected>Select category</option>
+                    <option th:each="c : ${categories}" th:value="${c}" th:text="${c}"></option>
+                </select>
+                <div class="text-danger small" th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Author</label>
+                <select class="form-select" th:field="*{authorId}">
+                    <option value="" disabled selected>Select author</option>
+                    <option th:each="a : ${authors}" th:value="${a.id}" th:text="${a.name + ' ' + a.surname}"></option>
+                </select>
+                <div class="text-danger small" th:if="${#fields.hasErrors('authorId')}" th:errors="*{authorId}"></div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">State</label>
+                <select class="form-select" th:field="*{state}">
+                    <option value="" disabled selected>Select state</option>
+                    <option th:each="s : ${states}" th:value="${s}" th:text="${s}"></option>
+                </select>
+                <div class="text-danger small" th:if="${#fields.hasErrors('state')}" th:errors="*{state}"></div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Available Copies</label>
+                <input type="number" min="0" class="form-control" th:field="*{availableCopies}">
+                <div class="text-danger small" th:if="${#fields.hasErrors('availableCopies')}" th:errors="*{availableCopies}"></div>
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+            <a class="btn btn-link" th:href="@{/books}">Cancel</a>
+        </form>
+    </div>
+</div>
+</body>
+</html>

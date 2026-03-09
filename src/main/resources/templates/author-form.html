@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="layout :: layout(~{::body})">
+<head></head>
+<body>
+<div class="row">
+    <div class="col-md-8 col-lg-6">
+        <h2 th:text="${formTitle}">Author Form</h2>
+        <form th:action="${editing} ? @{/authors/{id}(id=${authorId})} : @{/authors}" th:object="${author}" method="post">
+            <div class="mb-3">
+                <label class="form-label">Name</label>
+                <input type="text" class="form-control" th:field="*{name}" placeholder="Author name">
+                <div class="text-danger small" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Surname</label>
+                <input type="text" class="form-control" th:field="*{surname}" placeholder="Author surname">
+                <div class="text-danger small" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"></div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Country</label>
+                <select class="form-select" th:field="*{countryId}">
+                    <option value="" disabled selected>Select country</option>
+                    <option th:each="c : ${countries}" th:value="${c.id}" th:text="${c.name}"></option>
+                </select>
+                <div class="text-danger small" th:if="${#fields.hasErrors('countryId')}" th:errors="*{countryId}"></div>
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+            <a class="btn btn-link" th:href="@{/authors}">Cancel</a>
+        </form>
+    </div>
+</div>
+</body>
+</html>

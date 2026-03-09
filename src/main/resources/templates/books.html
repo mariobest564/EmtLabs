@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="layout :: layout(~{::body})">
+<head></head>
+<body>
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Books</h2>
+    <a class="btn btn-primary" th:href="@{/books/add}">Add Book</a>
+</div>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Author</th>
+        <th>Category</th>
+        <th>State</th>
+        <th>Available Copies</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="book : ${books}">
+        <td th:text="${book.id}"></td>
+        <td th:text="${book.name}"></td>
+        <td th:text="${book.author != null ? book.author.name + ' ' + book.author.surname : 'N/A'}"></td>
+        <td th:text="${book.category}"></td>
+        <td th:text="${book.state}"></td>
+        <td th:text="${book.availableCopies}"></td>
+        <td class="text-end">
+            <a class="btn btn-sm btn-outline-secondary" th:href="@{/books/{id}/edit(id=${book.id})}">Edit</a>
+            <form th:action="@{/books/{id}/delete(id=${book.id})}" method="post" class="d-inline">
+                <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete this book?')">Delete</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
