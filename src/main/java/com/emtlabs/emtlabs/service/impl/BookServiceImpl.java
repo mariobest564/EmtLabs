@@ -2,6 +2,7 @@ package com.emtlabs.emtlabs.service.impl;
 
 import com.emtlabs.emtlabs.model.Author;
 import com.emtlabs.emtlabs.model.Book;
+import com.emtlabs.emtlabs.model.BookCategory;
 import com.emtlabs.emtlabs.model.dto.BookDto;
 import com.emtlabs.emtlabs.repository.AuthorRepository;
 import com.emtlabs.emtlabs.repository.BookRepository;
@@ -22,7 +23,12 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<Book> findAll() {
-        return bookRepository.findAll();
+        return bookRepository.findAllByDeletedFalse();
+    }
+
+    @Override
+    public List<Book> findByCategory(BookCategory category) {
+        return bookRepository.findAllByCategoryAndDeletedFalse(category);
     }
 
     @Override
@@ -58,6 +64,14 @@ public class BookServiceImpl implements BookService {
         book.setState(dto.state());
         book.setAvailableCopies(dto.availableCopies());
         return bookRepository.save(book);
+    }
+
+    @Override
+    public void softDeleteById(Long id) {
+        Book book = bookRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Book with id " + id + " not found"));
+        book.setDeleted(true);
+        bookRepository.save(book);
     }
 
     @Override

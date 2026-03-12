@@ -51,6 +51,9 @@ public class Book {
     @Column(name = "available_copies")
     private Integer availableCopies;
 
+    @Column(name = "deleted", nullable = false)
+    private boolean deleted = false;
+
     @PrePersist
     private void onCreate() {
         LocalDateTime now = LocalDateTime.now();

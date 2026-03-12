@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
 
 @Controller
@@ -28,8 +29,14 @@ public class BookViewController {
     private final AuthorService authorService;
 
     @GetMapping
-    public String list(Model model) {
-        model.addAttribute("books", bookService.findAll());
+    public String list(@RequestParam(required = false) BookCategory category, Model model) {
+        if (category != null) {
+            model.addAttribute("books", bookService.findByCategory(category));
+        } else {
+            model.addAttribute("books", bookService.findAll());
+        }
+        model.addAttribute("categories", BookCategory.values());
+        model.addAttribute("selectedCategory", category);
         return "books";
     }
 
@@ -70,6 +77,12 @@ public class BookViewController {
             return prepareForm(model, dto, true, id);
         }
         bookService.update(id, dto);
+        return "redirect:/books";
+    }
+
+    @PostMapping("/{id}/soft-delete")
+    public String softDelete(@PathVariable Long id) {
+        bookService.softDeleteById(id);
         return "redirect:/books";
     }
 

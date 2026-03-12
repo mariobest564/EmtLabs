@@ -6,6 +6,22 @@
     <h2>Books</h2>
     <a class="btn btn-primary" th:href="@{/books/add}">Add Book</a>
 </div>
+
+<!-- Category Filter -->
+<form method="get" th:action="@{/books}" class="mb-3 d-flex gap-2 align-items-center">
+    <label for="categoryFilter" class="form-label mb-0">Filter by category:</label>
+    <select id="categoryFilter" name="category" class="form-select w-auto">
+        <option value="">All Categories</option>
+        <option th:each="cat : ${categories}"
+                th:value="${cat}"
+                th:text="${cat}"
+                th:selected="${cat == selectedCategory}">
+        </option>
+    </select>
+    <button type="submit" class="btn btn-outline-primary">Filter</button>
+    <a th:href="@{/books}" class="btn btn-outline-secondary">Clear</a>
+</form>
+
 <table class="table table-striped">
     <thead>
     <tr>
@@ -28,8 +44,13 @@
         <td th:text="${book.availableCopies}"></td>
         <td class="text-end">
             <a class="btn btn-sm btn-outline-secondary" th:href="@{/books/{id}/edit(id=${book.id})}">Edit</a>
+            <form th:action="@{/books/{id}/soft-delete(id=${book.id})}" method="post" class="d-inline">
+                <button type="submit" class="btn btn-sm btn-outline-warning"
+                        onclick="return confirm('Soft delete this book?')">Soft Delete</button>
+            </form>
             <form th:action="@{/books/{id}/delete(id=${book.id})}" method="post" class="d-inline">
-                <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete this book?')">Delete</button>
+                <button type="submit" class="btn btn-sm btn-outline-danger"
+                        onclick="return confirm('Permanently delete this book?')">Delete</button>
             </form>
         </td>
     </tr>
