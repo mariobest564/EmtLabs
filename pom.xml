@@ -160,8 +160,8 @@
                 <version>11.14.1</version>
                 <configuration>
                     <url>jdbc:postgresql://localhost:5432/mydatabase</url>
-                    <user>mario</user>
-                    <password>mario</password>
+                    <user>myuser</user>
+                    <password>secret</password>
                 </configuration>
             </plugin>
             <plugin>

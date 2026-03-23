@@ -86,6 +86,12 @@ public class BookViewController {
         return "redirect:/books";
     }
 
+    @PostMapping("/{id}/rent")
+    public String rent(@PathVariable Long id) {
+        bookService.rentBook(id);
+        return "redirect:/books";
+    }
+
     @PostMapping("/{id}/delete")
     public String delete(@PathVariable Long id) {
         bookService.deleteById(id);

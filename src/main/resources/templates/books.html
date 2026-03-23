@@ -43,6 +43,11 @@
         <td th:text="${book.state}"></td>
         <td th:text="${book.availableCopies}"></td>
         <td class="text-end">
+            <form th:action="@{/books/{id}/rent(id=${book.id})}" method="post" class="d-inline">
+                <button type="submit"
+                        class="btn btn-sm btn-outline-primary"
+                        th:disabled="${book.availableCopies == null or book.availableCopies <= 0}">Rent</button>
+            </form>
             <a class="btn btn-sm btn-outline-secondary" th:href="@{/books/{id}/edit(id=${book.id})}">Edit</a>
             <form th:action="@{/books/{id}/soft-delete(id=${book.id})}" method="post" class="d-inline">
                 <button type="submit" class="btn btn-sm btn-outline-warning"
